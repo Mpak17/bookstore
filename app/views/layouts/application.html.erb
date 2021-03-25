@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="https://use.fontawesome.com/67602d7308.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <title>Bookstore</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
@@ -11,6 +13,8 @@
   </head>
 
   <body>
-    <%= yield %>
+  <%= render('header') %>
+  <%= yield %>
+  <%= render('footer') %>
   </body>
 </html>

@@ -59,6 +59,7 @@
     <orderEntry type="library" scope="PROVIDED" name="fasterer (v0.9.0, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ffi (v1.15.0, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="globalid (v0.4.2, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="haml (v5.2.1, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="i18n (v1.8.9, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="iniparse (v1.5.0, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jbuilder (v2.11.2, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
@@ -119,6 +120,7 @@
     <orderEntry type="library" scope="PROVIDED" name="spring (v2.1.1, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sprockets (v4.0.2, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sprockets-rails (v3.2.2, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="temple (v0.8.2, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="thor (v1.1.0, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="tilt (v2.0.10, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="turbolinks (v5.2.1, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
@@ -132,6 +134,7 @@
     <orderEntry type="library" scope="PROVIDED" name="websocket-extensions (v0.1.5, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="xpath (v3.2.0, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="zeitwerk (v2.4.2, RVM: ruby-2.7.2 [bookstore]) [gem]" level="application" />
+    <orderEntry type="library" name="67602d7308" level="application" />
   </component>
   <component name="RModuleSettingsStorage">
     <LOAD_PATH number="0" />
