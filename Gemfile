@@ -34,6 +34,7 @@ group :development, :test do
   gem 'byebug', platforms: %w[mri mingw x64_mingw]
   gem 'fasterer'
   gem 'overcommit'
+  gem 'pry'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rspec', require: false
