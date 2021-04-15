@@ -17,8 +17,8 @@ executors:
       - image: circleci/postgres:13.1
         environment:
           POSTGRES_DB: bookstore_test
-          POSTGRES_USER: bookstore
-          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_USER: dev
+          POSTGRES_PASSWORD: dev
 
 commands:
   configure_bundler:
