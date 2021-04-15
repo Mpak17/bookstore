@@ -8,9 +8,9 @@
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
 #
-# It's strongly recommended that you check this file into your version control system.
+# It'homes strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_02_065103) do
+ActiveRecord::Schema.define(version: 2021_04_08_204941) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -32,11 +32,22 @@ ActiveRecord::Schema.define(version: 2021_04_02_065103) do
   end
 
   create_table 'books', force: :cascade do |t|
-    t.string 'name'
+    t.string 'title'
     t.float 'price'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
     t.string 'description'
+    t.bigint 'category_id'
+    t.integer 'view_count', default: 0
+    t.string 'dimensions'
+    t.string 'materials'
+    t.index ['category_id'], name: 'index_books_on_category_id'
+  end
+
+  create_table 'categories', force: :cascade do |t|
+    t.string 'title'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
 
   add_foreign_key 'book_authors', 'authors'

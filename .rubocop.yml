@@ -6,6 +6,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'spec/**/*'
+    - 'db/**/*'
   TargetRubyVersion: 2.4
 
 Layout/LineLength:
