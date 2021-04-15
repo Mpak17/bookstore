@@ -1,0 +1,65 @@
+%main.container
+  %h1.general-title-margin Сatalog
+  .hidden-xs.clearfix
+    .dropdowns.pull-right
+      .dropdown.width-240
+        %a.dropdown-toggle.lead.small{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
+          = ::FindBooks.new(params).name_form_sorting
+          %i.fa.fa-angle-down.dropdown-icon.pull-right
+        %ul.dropdown-menu
+          %li
+            %a{href: books_path(@search_params.merge(sort_by: '-created_at'))} Newest first
+          %li
+            %a{href: books_path(@search_params.merge(sort_by: '-view_count'))} Popular first
+          %li
+            %a{href: books_path(@search_params.merge(sort_by: :price))} Price: Low to hight
+          %li
+            %a{href: books_path(@search_params.merge(sort_by: '-price'))} Price: Hight to low
+          %li
+            %a{href: books_path(@search_params.merge(sort_by: :title))} Title: A - Z
+          %li
+            %a{href: books_path(@search_params.merge(sort_by: '-title'))} Title: Z - A
+    %ul.list-inline.pt-10.mb-25.mr-240
+      %li.mr-35
+        %a.filter-link{href: books_path}
+          All
+          %span.badge.general-badge= @books_count
+      - Category.all.each do |category|
+        = render('books/category', category: category)
+  .dropdowns.mb-25.visible-xs
+    %p.lead.small.mb-10 Filter by category
+    .dropdown
+      %a.dropdown-toggle.lead.small{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
+        Newest first
+        %i.fa.fa-angle-down.dropdown-icon.pull-right
+      %ul.dropdown-menu
+        %li
+          %a{href: "#"} Newest first
+        %li
+          %a{href: "#"} Popular first
+        %li
+          %a{href: "#"} Price: Low to hight
+        %li
+          %a{href: "#"} Price: Hight to low
+    %p.lead.small.mb-10 Sort by
+    .dropdown
+      %a.dropdown-toggle.lead.small{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
+        Newest first
+        %i.fa.fa-angle-down.dropdown-icon.pull-right
+      %ul.dropdown-menu
+        %li
+          %a{href: "#"} Newest first
+        %li
+          %a{href: "#"} Popular first
+        %li
+          %a{href: "#"} Price: Low to hight
+        %li
+          %a{href: "#"} Price: Hight to low
+  .mb-120
+    #books.row.mb-25
+      - @books.each do |book|
+        = render('books/book', book: book)
+    #pagy.text-center
+      #button.text-center
+        = link_to books_path(@search_params.merge(page: @page)), remote: true do
+          %button.btn.btn-primary View More

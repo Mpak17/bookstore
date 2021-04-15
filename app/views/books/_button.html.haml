@@ -1,0 +1,4 @@
+- if page < @pagy.pages || page == @pagy.pages
+  #button.text-center
+    = link_to books_path(@search_params.merge(page: page)), remote: true do
+      %button.btn.btn-primary View More
