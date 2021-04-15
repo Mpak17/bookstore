@@ -1,0 +1,4 @@
+$('#books').append('<%= j render('books/test') %>')
+<% @page_index = @search_params[:page].to_i + 1 %>
+$('#button').remove()
+$('#pagy').append('<%= j render('books/button', page: @page_index) %>')
