@@ -17,8 +17,7 @@ executors:
       - image: circleci/postgres:13.1
         environment:
           POSTGRES_DB: bookstore_test
-          POSTGRES_USER: dev
-          POSTGRES_PASSWORD: dev
+          POSTGRES_USER: bookstore
 
 commands:
   configure_bundler:
@@ -44,6 +43,7 @@ jobs:
       - run:
           name: Install bundle
           command: bundle install
+      - run: mv config/database.circleci config/database.yml
       - run:
           name: Wait for DB
           command: dockerize -wait tcp://127.0.0.1:5432 -timeout 1m
