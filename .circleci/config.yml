@@ -2,87 +2,91 @@ version: 2.1
 
 executors:
   default:
-    working_directory: ~/bookstore
+    working_directory: ~/repo
+    description: The official CircleCI Ruby Docker image
     docker:
-      - image: circleci/ruby:2.7.2-node-browsers
+      - image: cimg/ruby:2.7.2-node
         environment:
-          BUNDLE_JOBS: 3
-          BUNDLE_PATH: vendor/bundle
-          BUNDLE_RETRY: 3
-          BUNDLER_VERSION: 2.0.1
           RAILS_ENV: test
-          DB_HOST: 127.0.0.1
-          PG_HOST: 127.0.0.1
+          PGHOST: localhost
           PGUSER: bookstore
-      - image: circleci/postgres:13.1
+      - image: circleci/postgres:9.6.9
         environment:
-          POSTGRES_DB: bookstore_test
           POSTGRES_USER: bookstore
-
+          POSTGRES_DB: bookstore_test
+caches:
+  - &bundle_cache_full v2-repo-{{ checksum "Gemfile.lock" }}
+  - &bundle_cache v2-repo-
+  - &yarn_cache_full yarn-cache-v1-{{ checksum "yarn.lock" }}
+  - &yarn_cache yarn-cache-v1-
 commands:
-  configure_bundler:
-    description: Configure bundler
-    steps:
-      - run:
-          name: Configure bundler
-          command: |
-            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-            source $BASH_ENV
-            gem install bundler
-
-jobs:
-  build:
-    executor: default
+  defaults:
     steps:
       - checkout
       - restore_cache:
           keys:
-            - bookstore-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-            - bookstore-
-      - configure_bundler
-      - run:
-          name: Install bundle
-          command: bundle install
+            - *bundle_cache_full
+            - *bundle_cache
+      - restore_cache:
+          keys:
+            - *yarn_cache_full
+            - *yarn_cache
+      - run: bundle install --path vendor/bundle
       - run: mv config/database.circleci config/database.yml
       - run:
-          name: Wait for DB
-          command: dockerize -wait tcp://127.0.0.1:5432 -timeout 1m
-      - run:
-          name: Setup DB
-          command: bundle exec rails db:create db:schema:load --trace
-      - run:
-          name: Setup yarn
-          command: yarn
-      - run:
-          name: RSpec
+          name: Database Setup
           command: |
-            bundle exec rspec --profile 10 \
-                              --format progress
-      - store_artifacts:
-             path: coverage
+            bin/rails db:schema:load --trace
+            bin/rails db:migrate
+      - run: yarn install --path node_modules
+      - run: bundle exec bin/rails webpacker:compile
       - save_cache:
-          key: bookstore-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          key: *bundle_cache_full
           paths:
             - vendor/bundle
-      - persist_to_workspace:
-          root: ~/
+      - save_cache:
+          key: *yarn_cache_full
           paths:
-            - ./bookstore
-  rubocop:
+            - node_modules
+  run_rubocop:
+    description: command to start rubocop
+    steps:
+      - run:
+          name: rubocop
+          command: bundle exec rubocop
+  run_specs:
+    steps:
+      - run:
+          name: run specs
+          command: |
+            bundle exec rspec --format progress \
+                              --out /tmp/test-results/rspec/rspec.xml
+          when: always
+      - store_test_results:
+          path: /tmp/test-results/rspec/
+jobs:
+  build:
     executor: default
     steps:
-      - attach_workspace:
-          at: ~/
-      - configure_bundler
-      - run:
-          name: Rubocop
-          command: bundle exec rubocop
-
+      - defaults
+  lintering:
+    executor: default
+    steps:
+      - defaults
+      - run_rubocop
+  rspec:
+    executor: default
+    steps:
+      - defaults
+      - run_specs
 workflows:
-  version: 2
-  integration:
+  version: 2.1
+  build:
     jobs:
       - build
-      - rubocop:
+      - lintering:
           requires:
             - build
+      - rspec:
+          requires:
+            - lintering
