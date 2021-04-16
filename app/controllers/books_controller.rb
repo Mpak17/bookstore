@@ -1,6 +1,4 @@
 class BooksController < ApplicationController
-  attr_accessor :page
-
   before_action :set_post, only: [:show]
 
   def index

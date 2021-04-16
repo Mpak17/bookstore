@@ -1,13 +1,16 @@
 require:
   - rubocop-rspec
-  - rubocop-performance
+  - rubocop-rails
 
 AllCops:
   NewCops: enable
   Exclude:
-    - 'spec/**/*'
-    - 'db/**/*'
-  TargetRubyVersion: 2.4
+    - "bin/**"
+    - "db/schema.rb"
+    - "db/migrate/*"
+    - "vendor/**/*"
+    - "node_modules/**/*"
+  TargetRubyVersion: 3.0.0
 
 Layout/LineLength:
   Max: 120
@@ -19,4 +22,11 @@ Style/Documentation:
   Enabled: false
 
 Style/NumericLiterals:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+
+Rails/SkipsModelValidations:
   Enabled: false
