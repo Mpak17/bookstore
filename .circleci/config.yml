@@ -51,6 +51,9 @@ jobs:
           name: Setup DB
           command: bundle exec rails db:create db:schema:load --trace
       - run:
+          name: Setup yarn
+          command: yarn
+      - run:
           name: RSpec
           command: |
             bundle exec rspec --profile 10 \
